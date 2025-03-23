@@ -1,0 +1,27 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorSports", "BlazorSports\BlazorSports.csproj", "{2409A34D-8B8C-4D50-B7DC-F3C6D29ADE87}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Grpc", "Grpc", "{64F4DC4B-348F-4E91-B3C5-B3E7CC7F5380}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "F1Grpc", "F1Grpc\F1Grpc.csproj", "{C419C455-C7C0-4455-9212-9E992DF394FB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2409A34D-8B8C-4D50-B7DC-F3C6D29ADE87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2409A34D-8B8C-4D50-B7DC-F3C6D29ADE87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2409A34D-8B8C-4D50-B7DC-F3C6D29ADE87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2409A34D-8B8C-4D50-B7DC-F3C6D29ADE87}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C419C455-C7C0-4455-9212-9E992DF394FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C419C455-C7C0-4455-9212-9E992DF394FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C419C455-C7C0-4455-9212-9E992DF394FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C419C455-C7C0-4455-9212-9E992DF394FB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C419C455-C7C0-4455-9212-9E992DF394FB} = {64F4DC4B-348F-4E91-B3C5-B3E7CC7F5380}
+	EndGlobalSection
+EndGlobal

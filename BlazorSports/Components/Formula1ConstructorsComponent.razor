@@ -1,0 +1,35 @@
+@using F1GrpcServer
+@inject F1Grpc.F1GrpcClient GrpcClient
+
+<h3>Formula1ConstructorsComponent</h3>
+
+<MudTable Items="ConstructorsChampionships.OrderBy(e=>e.Position)">
+    <HeaderContent>
+        <MudTh>Team</MudTh>
+        <MudTh>Points</MudTh>
+        <MudTh>Wins</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd>@context.TeamId</MudTd>
+        <MudTh>@context.Points</MudTh>
+        <MudTh>@context.Wins</MudTh>
+    </RowTemplate>
+</MudTable>
+
+@code {
+
+    private List<ConstructorsChampionship> ConstructorsChampionships { get; set; } = new();
+
+    protected override async void OnInitialized()
+    {
+        await GetConstruncorsData();
+    }
+
+    private async Task GetConstruncorsData()
+    {
+        var result = GrpcClient.GetConstructorsChampionship(
+            new ConstructorsChampionshipRequest()).Constructors.ToList();
+
+        ConstructorsChampionships = result;
+    }
+}
