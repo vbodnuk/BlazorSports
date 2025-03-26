@@ -1,0 +1,75 @@
+@using F1GrpcServer
+@using BlazorSports.Utils
+@inject F1Grpc.F1GrpcClient GrpcClient
+
+@rendermode InteractiveServer
+
+
+<h2>@DriverYear</h2>
+
+<MudStack Spacing="9" Row="true" Wrap="Wrap.Wrap" Style="margin-bottom: 10px; align-items: center">
+    <MudPaper Elevation="0">
+        <MudTextField @bind-Value="Year" 
+                         Variant="Variant.Outlined" 
+                         Label="Year"
+                         Clearable="true"
+                         OnClearButtonClick="GetDriversChampionshipAsync"
+                         Style="width: 200px;height: 43px"/>
+    </MudPaper>
+    <MudPaper>
+        <MudButton OnClick="@GetDriversChampionshipAsync" Color="Color.Primary" Variant="Variant.Filled" Style="height: 43px">Search</MudButton>
+    </MudPaper>
+</MudStack>
+
+<MudTable Items="DriversChampionship.OrderBy(e=>e.Position)">
+    <HeaderContent>
+        <MudTh>#</MudTh>
+        <MudTh>Driver</MudTh>
+        <MudTh>Team</MudTh>
+        <MudTh>Points</MudTh>
+        <MudTh>Wins</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd>@context.Position</MudTd>
+        <MudTd>
+            <MudLink Href="@context.DriverInfo.Url" Target="_blank">
+                @context.DriverInfo.Name @context.DriverInfo.Surname
+            </MudLink>
+        </MudTd>
+        <MudTh>@context.TeamId.ToTitle()</MudTh>
+        <MudTh>@context.Points</MudTh>
+        <MudTh>@context.Wins</MudTh>
+    </RowTemplate>
+</MudTable>
+
+@code {
+
+    private string DriverYear { get; set; }
+    private int? Year { get; set; }
+    private List<DriversChampionships> DriversChampionship { get; set; } = new();
+    
+    protected override async Task OnInitializedAsync()
+    {
+        await GetDriversChampionshipAsync();
+    }
+
+    private async Task GetDriversChampionshipAsync()
+    {
+        
+        DriverYear = Year == default ? "Current Driver Standings" : $"{Year} Driver Standings";
+
+        var request = new DriversChampionshipsRequest();
+        
+        if (Year != default)
+        {
+            request.Year = (int)Year;
+        }
+        
+        var response = await GrpcClient.GetDriversChampionshipAsync(request);
+        var result = response.Drivers.ToList();
+
+        DriversChampionship = result;
+        StateHasChanged();
+    }
+
+}

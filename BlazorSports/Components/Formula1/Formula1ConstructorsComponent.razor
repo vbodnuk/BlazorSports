@@ -1,0 +1,71 @@
+@using F1GrpcServer
+@inject F1Grpc.F1GrpcClient GrpcClient
+
+@rendermode InteractiveServer
+
+
+<h2>@Constructor</h2>
+<MudStack Row="true" Wrap="Wrap.Wrap" Style="margin-bottom: 10px; align-items: center">
+    <MudPaper Elevation="0">
+        <MudTextField @bind-Value="ConstructorYear" 
+                         Variant="Variant.Outlined" 
+                         Label="Year"
+                         Clearable="true"
+                         OnClearButtonClick="GetConstructorsDataAsync"
+                         Style="width: 200px;height: 43px"/>
+    </MudPaper>
+    <MudPaper>
+        <MudButton OnClick="@GetConstructorsDataAsync" Color="Color.Primary" Variant="Variant.Filled" Style="height: 43px">Search</MudButton>
+    </MudPaper>
+</MudStack>
+
+
+<MudTable Items="ConstructorsChampionships.OrderBy(e=>e.Position)">
+    <HeaderContent>
+        <MudTh>#</MudTh>
+        <MudTh>Team</MudTh>
+        <MudTh>Points</MudTh>
+        <MudTh>Wins</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd>@context.Position</MudTd>
+        <MudTd>
+            <MudLink Href="@context.TeamInfo.Url" Target="_blank">
+                @context.TeamInfo.Name
+            </MudLink>
+        </MudTd>
+        <MudTh>@context.Points</MudTh>
+        <MudTh>@context.Wins</MudTh>
+    </RowTemplate>
+</MudTable>
+
+@code {
+
+    private int? ConstructorYear { get; set; }
+    private string Constructor { get; set; }
+    private List<ConstructorsChampionship> ConstructorsChampionships { get; set; } = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+          await GetConstructorsDataAsync();
+    }
+
+    private async Task GetConstructorsDataAsync()
+    {
+        Constructor = ConstructorYear == default ? "Current Constructor Standings" : $"{ConstructorYear} Constructor Standings";
+
+        var request = new ConstructorsChampionshipRequest();
+
+        if (ConstructorYear != null)
+        {
+            request.Year = (int)ConstructorYear;
+        }
+        
+        var response = await GrpcClient.GetConstructorsChampionshipAsync(request);
+        var result = response.Constructors.ToList();
+
+        ConstructorsChampionships = result;
+        StateHasChanged();
+    }
+    
+}

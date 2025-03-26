@@ -1,4 +1,6 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
+﻿@rendermode InteractiveServer
+
+<div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="">BlazorSports</a>
     </div>
@@ -26,9 +28,27 @@
             </NavLink>
         </div>
         <div class="nav-item px-3">
-            <NavLink class="nav-link" href="formula1">
-                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span>Formula 1
+            <NavLink class="nav-link" href="" @onclick="() => _isExpandMenu = !_isExpandMenu">
+                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Formula 1
             </NavLink>
+            @if (_isExpandMenu)
+            {
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="f1driverstandings">
+                        <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Drivers Standings
+                    </NavLink>
+                </div>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="f1constructorstandings">
+                        <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Constructor Standings
+                    </NavLink>
+                </div>
+            }
         </div>
     </nav>
 </div>
+
+@code
+{
+    private bool _isExpandMenu = false;
+}

@@ -8,9 +8,11 @@ public class ServiceModule : Module
 {
     public static void RegisterGrpcService(IServiceCollection services)
     {
-        var channel = GrpcChannel.ForAddress("http://localhost:5267");
-        var client = new F1Grpc.F1GrpcClient(channel);
+        {
+            var channel = GrpcChannel.ForAddress("http://localhost:5267");
+            var client = new F1Grpc.F1GrpcClient(channel);
 
-        services.AddSingleton(client);
+            services.AddSingleton(client);
+        }
     }
 }
