@@ -20,10 +20,8 @@ jobs:
     needs: first_job
     steps:
       - run: |
-echo "Hello ${{ vars.WHO_TO_GREET }} from ${{ github.
-actor }}."
-sec=$(echo ${{ secrets.MY_SECRET }} | sed 's/./& /g')
-echo "My secret is '$sec'."
+          echo "Hello  from ${{ github.actor }}."
+          echo "My secret is ."
   Production:
     runs-on: ubuntu-latest
     environment:
