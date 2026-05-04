@@ -28,5 +28,8 @@ jobs:
       name: Production
       url: https://writeabout.net
     needs: Test
-      
+    steps:
+      - run: |
+          echo "Hello  from ${{ github.actor }}."
+          echo "My secret is ."
     
