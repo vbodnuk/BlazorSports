@@ -14,4 +14,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6.0.2
       - run: tree
+  Test:
+    runs-on: ubuntu-latest
+    environment: Test
+    needs: first_job
+  Production:
+    runs-on: ubuntu-latest
+    environment:
+      name: Production
+      url: https://writeabout.net
+    needs: Test
+      
     
